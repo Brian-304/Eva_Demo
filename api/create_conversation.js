@@ -1,48 +1,56 @@
+export const config = {
+  maxDuration: 30, // Increases the time Vercel waits before giving up
+};
+
 export default async function handler(req, res) {
   try {
-    // 1. Verification Logs (Visible in Vercel Dashboard)
-    console.log("Attempting Tavus connection...");
+    // 1. Logs to confirm Vercel is reading your environment variables
+    console.log("Checking Environment Variables...");
     console.log("Replica ID used:", process.env.AVATAR_ID);
 
-    const url = "https://api.tavus.io/v2/conversations";
+    // 2. The correct Tavus v2 Endpoint
+    // Note: 'tavusapi.com' is the current domain for v2 requests
+    const url = "https://tavusapi.com/v2/conversations";
 
-    // 2. The Payload (Using 'replica_id' as required by Tavus v2)
+    // 3. The Payload - Key must be 'replica_id'
     const payload = {
       replica_id: process.env.AVATAR_ID,
       input: {}
     };
 
-    // 3. The Request
+    console.log("Attempting fetch to:", url);
+
+    // 4. The Request - Using 'x-api-key' instead of 'Authorization'
     const response = await fetch(url, {
       method: "POST",
       headers: {
-        "Authorization": `Bearer ${process.env.TAVUS_API_KEY.trim()}`,
+        "x-api-key": process.env.TAVUS_API_KEY.trim(),
         "Content-Type": "application/json"
       },
-      body: JSON.stringify(payload),
-      // Helps prevent the 'undici' timeout error in Node.js
-      keepalive: false 
+      body: JSON.stringify(payload)
     });
 
-    // 4. Handle non-200 responses
+    // 5. Handle responses that aren't successful
     if (!response.ok) {
-      const errorData = await response.text();
-      console.error("Tavus API rejected request:", errorData);
+      const errorText = await response.text();
+      console.error("Tavus API responded with an error:", errorText);
       return res.status(response.status).json({ 
         error: "Tavus API Error", 
-        details: errorData 
+        details: errorText 
       });
     }
 
     const data = await response.json();
-    console.log("Tavus Success! Data received.");
-    
+    console.log("Tavus Success! Conversation created.");
+
+    // 6. Return the data to your index.html
     return res.status(200).json(data);
 
   } catch (err) {
+    // This catches the 'ConnectTimeoutError'
     console.error("Connection Failed:", err.message);
     return res.status(500).json({ 
-      error: "Server Connection Timeout", 
+      error: "Connection Failed", 
       message: err.message 
     });
   }
