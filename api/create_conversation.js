@@ -16,8 +16,8 @@ export default async function handler(req, res) {
     const payload = {
       replica_id: "r1aea373d24c"
       conversation_config: {
-      max_duration: 120,
-      idle_timeout: 60
+      max_call_duration: 120,
+      participant_absent_timeout: 60
       }
     };
 
