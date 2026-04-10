@@ -7,6 +7,7 @@ export default async function handler(req, res) {
     // 1. Logs to confirm your Environment Variables are loading in Vercel
     console.log("Starting Tavus request...");
     console.log("Using Replica ID:", process.env.AVATAR_ID);
+    console.log("Using Persona ID:", process.env.PERSONA_ID);
 
     // 2. The correct Tavus v2 Endpoint
     // api.tavus.io is often deprecated for v2; tavusapi.com is the standard
@@ -14,11 +15,8 @@ export default async function handler(req, res) {
 
     // 3. The Payload - In v2, the key MUST be 'replica_id'
     const payload = {
-      replica_id: "r1aea373d24c"
-      conversation_config: {
-      max_call_duration: 120,
-      participant_absent_timeout: 60
-      }
+      replica_id: "r1aea373d24c",
+      persona_id: "p1f4fd4ca419"
     };
 
     console.log("Calling endpoint:", url);
