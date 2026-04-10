@@ -18,7 +18,7 @@ export default async function handler(req, res) {
       replica_id: "r1aea373d24c",
       persona_id: "p1f4fd4ca419",
       properties: {
-        max__call_duration: 120,
+        max_call_duration: 120,
         participant_left_timeout: 60
       }
     };
