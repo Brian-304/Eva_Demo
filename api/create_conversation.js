@@ -22,6 +22,8 @@ export default async function handler(req, res) {
 
     // 4. The Fetch Request
     // Note: Tavus v2 prefers 'x-api-key' over 'Authorization: Bearer'
+
+    console.log("SENDING PAYLOAD:", JSON.stringify(payload));
     const response = await fetch(url, {
       method: "POST",
       headers: {
