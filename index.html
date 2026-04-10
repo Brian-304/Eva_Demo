@@ -2,10 +2,11 @@
   <script crossorigin src="https://unpkg.com/@daily-co/daily-js"></script>
   <body>
     <script>
-      call = window.Daily.createFrame({
-        showLeaveButton: true,       // Leave button on bottom right
-        lang: "en",                  // Language set to Japanese
-        showFullscreenButton: true,  // Fullscreen button on top left
+      // Create the Daily iframe
+      const call = window.Daily.createFrame({
+        showLeaveButton: true,
+        lang: "en",
+        showFullscreenButton: true,
         iframeStyle: {
           position: 'fixed',
           top: '0',
@@ -15,13 +16,28 @@
         },
         theme: {
           colors: {
-            accent: "#2F80ED",      // primary button and accent color
-            background: "#F8F9FA",  // main background color
-            baseText: "#1A1A1A",    // text color
+            accent: "#2F80ED",
+            background: "#F8F9FA",
+            baseText: "#1A1A1A",
           },
         },
       });
-      call.join({ url: 'https://tavus.daily.co/c4fe17b44e40c445' });
+
+      // Fetch a new Tavus conversation from your backend
+      async function startConversation() {
+        const response = await fetch('/api/create_conversation');
+        const data = await response.json();
+
+        console.log("Tavus response:", data);
+
+        const roomUrl = data["room_url"];  // Tavus returns this
+        console.log("Joining room:", roomUrl);
+
+        call.join({ url: roomUrl });
+      }
+
+      // Start automatically
+      startConversation();
     </script>
   </body>
 </html>
