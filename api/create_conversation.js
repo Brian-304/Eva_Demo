@@ -1,5 +1,8 @@
 export default async function handler(req, res) {
   try {
+    console.log("API KEY:", process.env.TAVUS_API_KEY);
+    console.log("AVATAR ID:", process.env.AVATAR_ID);
+
     const url = "https://api.tavus.io/v2/conversations";
 
     const payload = {
@@ -16,12 +19,12 @@ export default async function handler(req, res) {
       body: JSON.stringify(payload)
     });
 
-    const text = await response.text();   // read raw text
+    const text = await response.text();
     console.log("Tavus raw response:", text);
 
     let data;
     try {
-      data = JSON.parse(text);            // try to parse JSON
+      data = JSON.parse(text);
     } catch (e) {
       return res.status(500).json({
         error: "Invalid JSON returned from Tavus",
