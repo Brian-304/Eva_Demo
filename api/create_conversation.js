@@ -14,8 +14,7 @@ export default async function handler(req, res) {
 
     // 3. The Payload - In v2, the key MUST be 'replica_id'
     const payload = {
-      replica_id: "r1aea373d24c",
-      persona_id: "p1f4fd4ca419",
+      replica_id: "r1aea373d24c"
       conversation_config: {
       max_duration: 120,
       idle_timeout: 60
