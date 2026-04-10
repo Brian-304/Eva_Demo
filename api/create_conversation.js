@@ -15,7 +15,7 @@ export default async function handler(req, res) {
     // 3. The Payload - In v2, the key MUST be 'replica_id'
     const payload = {
       replica_id: process.env.AVATAR_ID,
-      input: {}
+      input: process.env.AVATAR_ID.trim()
     };
 
     console.log("Calling endpoint:", url);
