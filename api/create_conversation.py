@@ -1,8 +1,7 @@
 import json
 import requests
 
-def handler(request):
-    # Your Tavus API key
+def main(request):
     TAVUS_API_KEY = "7c055a37d70c46719aaddaa9c34bc638"
 
     url = "https://api.tavus.io/v2/conversations"
@@ -25,3 +24,6 @@ def handler(request):
             "conversation_url": data.get("conversation_url")
         })
     }
+
+def handler(request):
+    return main(request)
