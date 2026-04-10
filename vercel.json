@@ -3,5 +3,9 @@
     "api/*.js": {
       "runtime": "nodejs18"
     }
-  }
+  },
+  "builds": [
+    { "src": "api/*.js", "use": "@vercel/node" },
+    { "src": "index.html", "use": "@vercel/static" }
+  ]
 }
