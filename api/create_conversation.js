@@ -16,7 +16,7 @@ export default async function handler(req, res) {
     // 3. The Payload - In v2, the key MUST be 'replica_id'
     const payload = {
       replica_id: "r1aea373d24c",
-      persona_id: "p3dc8f32b370",
+      persona_id: "p1f4fd4ca419",
       properties: {
         max_call_duration: 120,
         participant_left_timeout: 60
